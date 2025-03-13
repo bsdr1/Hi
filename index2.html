@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title> MD hospitals</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1,user-scalable=no">
+    <style>
+        html,body,#mapView{
+            padding:0;
+            margin:0;
+            height:100%;
+            width:100%;
+        }
+    </style>
+    <link rel="stylesheet" href="https://js.arcgis.com/4.26/esri/themes/light/main.css">
+    <script src="https://js.arcgis.com/4.26/"></script>
+    <script>
+        
+        require([ "esri/Map", "esri/views/MapView","esri/widgets/LayerList","esri/widgets/BasemapGallery","esri/layers/MapImageLayer"], 
+        function(Map, MapView, LayerList,BasemapGallery, MapImageLayer) {
+        // Insert your code here please
+        var map = new Map({
+            basemap: "satellite" // You could set the basemap to "streets" as well
+        });
+        var mapView = new MapView({
+            container: "mapView", // ID of the div element for the map view
+            map: map, // the map object created in the previous step
+            center: [-76.951,38.992], // set this to your desired location
+            zoom: 9 // set to your desired initial zoom level
+        });
+        var layerList = new LayerList({
+            view: mapView
+        });
+        mapView.ui.add(layerList, "top-right"); //Change last parameter as desired
+        var basemapGallery = new BasemapGallery({
+            view: mapView
+        });
+        // Add widget to the top right corner of the view
+        mapView.ui.add(basemapGallery,{position:"top-right"});
+        var mapImageLayer = new MapImageLayer ({
+            url: "https://geogws004.umd.edu/arcgis/rest/services/GEOG677_M2023/Hospitals_h/MapServer"
+        });
+        var mapImageLayer1 = new MapImageLayer ({
+            url: "https://geogws004.umd.edu/arcgis/rest/services/GEOG677_M2023/MDmapservice_xuan/MapServer"
+        });
+        var mapImageLayer2 = new MapImageLayer ({
+            url: "https://geodata.md.gov/imap/rest/services/Hydrology/MD_Waterbodies/MapServer"
+        });
+        map.layers.add(mapImageLayer);
+        map.layers.add(mapImageLayer1);
+        map.layers.add(mapImageLayer2);
+        });
+        
+    </script>
+
+
+</head>
+    
+    
+<body>
+    <div id="mapView"></div>
+
+
+
+
+
+</body>
+
+</html>
